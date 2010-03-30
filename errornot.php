@@ -1,6 +1,6 @@
 <?php
 /** vim: set ts=4 expandtab:
- * ErrorNot Notifier http://github.com/AF83/ErrorNot
+ * ErrorNot Notifier http://github.com/errornot/ErrorNot
  * Copyright (C) 2010  François de Metz
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,6 +37,13 @@ class Services_ErrorNot
     protected $version = '0.1.0';
 
     protected $adapter = null;
+
+    /**
+     * Dump session data when a exception is raised
+     *
+     * @var boolean
+     */
+    protected $dump_session_data = false;
 
     private $previous_exception_handler = null;
 
@@ -110,6 +117,14 @@ class Services_ErrorNot
     }
 
     /**
+     * Toggle Services_ErrorNot::dump_session_data
+     */
+    public function dumpSessionData()
+    {
+        $this->dump_session_data = !($this->dump_session_data);
+    }
+
+    /**
      * Set HTTP_Request2 Adapter
      * Useful for unit testing
      */
@@ -124,12 +139,23 @@ class Services_ErrorNot
      */
     public function notifyException(Exception $exception)
     {
+        $data = array();
+        if ($exception instanceof Services_ErrorNot_Exception)
+        {
+            $data['exception_data'] = $exception->getData();
+        }
+        
+        if ($this->dump_session_data && isset($_SESSION))
+        {
+            $data['SESSION'] = $_SESSION;
+        }
+
         $this->notify($exception->getMessage(),
                       null, // auto now
                       $exception->getTrace(),
                       array('params' => array('post' => $_POST, 'get' => $_GET, 'cookies' => $_COOKIE)),
                       $_SERVER,
-                      isset($_SESSION) ? $_SESSION : '');
+                      $data);
         if (!is_null($this->previous_exception_handler))
         {
             call_user_func($this->previous_exception_handler, $exception);
