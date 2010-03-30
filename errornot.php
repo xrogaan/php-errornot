@@ -15,6 +15,8 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * vim: set ts=4 expandtab:
  */
 
 /**
@@ -22,6 +24,13 @@
  */
 class Services_ErrorNot
 {
+    /**
+     * singleton instance for Services_ErrorNot
+     * 
+     * @var Services_ErrorNot
+     */
+    protected static $instance = null;
+    
     protected $url;
 
     protected $api_key;
@@ -32,20 +41,72 @@ class Services_ErrorNot
 
     private $previous_exception_handler = null;
 
+    public function __construct() {
+    }
+
     /**
-     * Create a new notifier
-     * @param String $url url of errornot instance
-     * @param String $api_key api key of project
-     * @param boolean $install_exception_handler
+     * Create a Services_ErrorNot object and store it for singleton access
+     *
+     * @return Services_ErrorNot
      */
-    public function __construct($url, $api_key, $install_exception_handler = false)
+    public static function init()
     {
-        $this->url     = $url;
-        $this->api_key = $api_key;
-        if ($install_exception_handler)
+        return self::$instance = new self();
+    }
+
+    /**
+     * Create singleton instance of Services_ErrorNot
+     *
+     * @param bool $auto_create True to create an instance if none exits
+     * @return Services_ErrorNot
+     */
+    public static function getInstance($auto_create = false)
+    {
+        if ((bool) $auto_create && is_null(self::$instance)) 
         {
-            $this->installExceptionHandler();
+            self::init();
         }
+        return self::$instance;
+    }
+
+    /**
+     * Store the api key
+     *
+     * @param string $api
+     * @return Services_ErrorNot
+     */
+    public function setApi($api)
+    {
+        if (!$this->api_key)
+        {
+            $this->api_key = $api;
+        }
+        return self::$instance;
+    }
+
+    /**
+     * Store the url
+     *
+     * @param string $url
+     * @return Services_ErrorNot
+     */
+    public function setUrl($url)
+    {
+        if (!$this->url)
+        {
+            $this->url = $url;
+        }
+        return self::$instance;
+    }
+
+    /**
+     * Register Services_ErrorNot as exception handler
+     *
+     * @return void
+     */
+    public function registerExceptionHandler()
+    {
+        $this->installExceptionHandler();
     }
 
     /**
