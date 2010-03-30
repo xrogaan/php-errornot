@@ -1,4 +1,5 @@
 <?php
+/** vim: set ts=4 expandtab */
 
 require_once 'simpletest/autorun.php';
 require_once 'HTTP/Request2.php';
@@ -73,16 +74,16 @@ class TestErrorNot extends UnitTestCase
         $this->assertNotNull($mock_network->getRequest());
 	}
 
-	public function testNotifyErrorNotExceptionWithEnvironment() {
-		list($errornot, $mock_network) = $this->createMockRequest();
-		$data = array ('key' => 'sample data', 'not' => 'usefull');
-		try {
-			throw new ErrorNotException('message exception', 0, $data);
-		} catch (ErrorNotException $e) {
-			$errornot->notifyException($e);
-		}
-		$this->assertNotNull($mock_network->getRequest());
-	}
+    public function testNotifyErrorNotExceptionWithEnvironment() {
+        list($errornot, $mock_network) = $this->createMockRequest();
+        $data = array ('key' => 'sample data', 'not' => 'usefull');
+        try {
+            throw new ErrorNotException('message exception', 0, $data);
+        } catch (ErrorNotException $e) {
+            $errornot->notifyException($e);
+        }
+        $this->assertNotNull($mock_network->getRequest());
+    }
 }
 
 class TestErrorNotExceptionHandler extends UnitTestCase
