@@ -92,7 +92,7 @@ class Services_ErrorNot
         {
             $this->api_key = $api;
         }
-        return self::$instance;
+        return static::$instance;
     }
 
     /**
@@ -107,7 +107,7 @@ class Services_ErrorNot
         {
             $this->url = $url;
         }
-        return self::$instance;
+        return static::$instance;
     }
 
     /**
@@ -118,7 +118,7 @@ class Services_ErrorNot
     public function registerExceptionHandler()
     {
         $this->installExceptionHandler();
-        return $this;
+        return static::$instance;
     }
 
     /**
@@ -145,7 +145,7 @@ class Services_ErrorNot
     public function notifyException(Exception $exception)
     {
         $data = array();
-        if ($exception instanceof Services_ErrorNot_Exception)
+        if ($exception instanceof ErrorNotException)
         {
             $data['exception_data'] = $exception->getData();
         }
