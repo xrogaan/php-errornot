@@ -3,7 +3,7 @@ PHP ErrorNot
 ============
 
 Php notifier for ErrorNot
-http://github.com/AF83/ErrorNot
+http://github.com/errornot/ErrorNot
 
 Requirements
 ============
@@ -16,7 +16,9 @@ Usage
 
 ::
 
-        $e = new Services_ErrorNot('http://example.net/', 'my-api-key');
+        $e = Services_ErrorNot::getInstance(true)
+                ->setUrl('http://example.net/')
+                ->setApi('my-api-key');
         $e->notify('big error');
         $e->notify('big error', '2010-03-03T00:00:42+01:00');
 
@@ -24,7 +26,10 @@ ErrorNot can install a custom exception handler:
 
 ::
 
-        $e = new Services_ErrorNot('http://example.net/', 'my-api-key', true);
+        $e = Services_ErrorNot::getInstance(true)
+                ->setUrl('http://example.net/')
+                ->setApi('my-api-key')
+                ->registerExceptionHandler();
 
 Be carefull about exception handler.
 
