@@ -3,6 +3,7 @@
 require_once 'simpletest/autorun.php';
 require_once 'HTTP/Request2.php';
 require_once dirname(__FILE__).'/../errornot.php';
+require_once dirname(__FILE__).'/../errornot_exception.php';
 require_once 'mock.php';
 
 class TestErrorNot extends UnitTestCase
@@ -70,7 +71,18 @@ class TestErrorNot extends UnitTestCase
             $errornot->notifyException($e);
         }
         $this->assertNotNull($mock_network->getRequest());
-    }
+	}
+
+	public function testNotifyErrorNotExceptionWithEnvironment() {
+		list($errornot, $mock_network) = $this->createMockRequest();
+		$data = array ('key' => 'sample data', 'not' => 'usefull');
+		try {
+			throw new ErrorNotException('message exception', 0, $data);
+		} catch (ErrorNotException $e) {
+			$errornot->notifyException($e);
+		}
+		$this->assertNotNull($mock_network->getRequest());
+	}
 }
 
 class TestErrorNotExceptionHandler extends UnitTestCase
