@@ -31,7 +31,7 @@ class ErrorNotException extends exception
      */
     protected $data;
 
-    public function __construct(string $message=null, $code=0, $data=null, Exception $previous=null)
+    public function __construct($message=null, $code=0, $data=null, Exception $previous=null)
     {
         $this->data = (array) $data;
         parent::__construct($message, $code, $previous);
