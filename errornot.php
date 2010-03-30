@@ -1,5 +1,5 @@
 <?php
-/**
+/** vim: set ts=4 expandtab:
  * ErrorNot Notifier http://github.com/AF83/ErrorNot
  * Copyright (C) 2010  François de Metz
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * vim: set ts=4 expandtab:
  */
 
 /**
@@ -107,6 +106,7 @@ class Services_ErrorNot
     public function registerExceptionHandler()
     {
         $this->installExceptionHandler();
+        return $this;
     }
 
     /**

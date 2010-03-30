@@ -9,7 +9,9 @@ class TestErrorNot extends UnitTestCase
 {
     protected function createMockRequest($url = 'http://localhost:3000/', $response_file = 'test_ok.txt')
     {
-        $errornot = new Services_ErrorNot($url, 'test-key');
+        $errornot = Services_ErrorNot::getInstance(true)
+            ->setUrl($url)
+            ->setApi('test-key');
         $mock_network = createMockRequest($response_file, 'MyMockAdapter');
         $errornot->setNetworkAdapter($mock_network);
         return array($errornot, $mock_network);

@@ -12,8 +12,11 @@ class MockAdapterWithNotify extends Http_Request2_Adapter_Mock
 }
 
 $mock_network = createMockRequest('test_ok.txt', 'MockAdapterWithNotify');
-$errornot = new Services_ErrorNot('http://localhost:3000/', 'test-key', true);
-$errornot->setNetworkAdapter($mock_network);
+$errornot = Services_ErrorNot::getInstance(true)
+    ->setUrl('http://localhost:3000/')
+    ->setApi('test-key')
+    ->registerExceptionHandler()
+    ->setNetworkAdapter($mock_network);
 
 throw new Exception('test');
 
