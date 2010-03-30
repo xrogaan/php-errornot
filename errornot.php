@@ -188,6 +188,12 @@ class Services_ErrorNot
         {
             $raised_at = date('c');
         }
+
+        if (count($backtrace) > 1 && !isset($backtrace[0]['file']))
+        {
+            array_shift($backtrace);
+        }
+
         $http_request->addPostParameter('api_key', $this->api_key);
         $http_request->addPostParameter('version', $this->version);
         $http_request->addPostParameter('error', array('message'     => $message,
