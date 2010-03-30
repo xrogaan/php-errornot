@@ -19,6 +19,11 @@
  */
 
 /**
+ * @see ErrorNotException
+ */
+require_once dirname(__FILE__).'/errornot_exception.php';
+
+/**
  * @package Services_ErrorNot
  */
 class Services_ErrorNot
@@ -47,7 +52,7 @@ class Services_ErrorNot
 
     private $previous_exception_handler = null;
 
-    public function __construct() {
+    private function __construct() {
     }
 
     /**
