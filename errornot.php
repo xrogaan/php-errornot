@@ -51,7 +51,7 @@ class Services_ErrorNot
      */
     public static function init()
     {
-        return self::$instance = new self();
+        return static::$instance = new static();
     }
 
     /**
@@ -62,11 +62,11 @@ class Services_ErrorNot
      */
     public static function getInstance($auto_create = false)
     {
-        if ((bool) $auto_create && is_null(self::$instance)) 
+        if ((bool) $auto_create && is_null(static::$instance)) 
         {
-            self::init();
+            static::init();
         }
-        return self::$instance;
+        return static::$instance;
     }
 
     /**
