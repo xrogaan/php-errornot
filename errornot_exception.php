@@ -19,9 +19,9 @@
  */
 
 /**
- * @package Services_ErrorNot_Exception
+ * @package ErrorNotException
  */
-class Services_ErrorNot_Exception extends exception
+class ErrorNotException extends exception
 {
     /**
      * Optionnal data
